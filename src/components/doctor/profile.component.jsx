@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { docdelurl, Feild, getdoctorurl, getpatienturl, paidelurl, Qualification, updatedoctorurl, updatepatienturl } from '../../utils/constants';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
@@ -25,23 +25,22 @@ export default function Profile(props) {
     delurl = paidelurl + window.localStorage.getItem("name")
   }
 
-  useEffect(() => {
-    if (props.type === "Doctor") {
-      axios.get(geturl)
-        .then(res => {
-          window.localStorage.setItem("details", JSON.stringify(res.data))
-        })
-    } else {
-      axios.get(geturl, {
-        headers: {
-          'Authorization': "Bearer " + window.localStorage.getItem('jwt')
-        }
+
+  if (props.type === "Doctor") {
+    axios.get(geturl)
+      .then(res => {
+        window.localStorage.setItem("details", JSON.stringify(res.data))
       })
-        .then(res => {
-          window.localStorage.setItem("details", JSON.stringify(res.data))
-        })
-    }
-  })
+  } else {
+    axios.get(geturl, {
+      headers: {
+        'Authorization': "Bearer " + window.localStorage.getItem('jwt')
+      }
+    })
+      .then(res => {
+        window.localStorage.setItem("details", JSON.stringify(res.data))
+      })
+  }
 
 
   let details = window.localStorage.getItem("details")
@@ -79,6 +78,7 @@ export default function Profile(props) {
         console.log(res)
         if (res.status === "200") {
           alert("Details Updated")
+          window.location.href = "/doctorprofile"
           window.location.href = "/doctorprofile"
         }
       })
@@ -136,84 +136,90 @@ export default function Profile(props) {
   // }
 
   return (
-    <form onSubmit={(e) => { props.type === "Doctor" ? doctorsubmit(e) : patientsubmit(e) }}>
-      <h3>Edit Profile</h3>
-      <div className="mb-3 row">
-        <div className="col">
-          <label>First name</label>
-          <input onChange={(e) => handle(e)}
-            id="firstname"
-            value={data.firstname}
-            type="text" className="form-control" />
-        </div>
-        <div className="col">
-          <label>Last name</label>
-          <input onChange={(e) => handle(e)}
-            id="lastname"
-            value={data.lastname}
-            type="text" className="form-control" />
-        </div>
-      </div>
-
-      {props.type === "Doctor" ?
-        <div className="mb-3 row">
-          <div className="col">
-            <label>Feild</label>
-            <Form.Select value={data.feild} id="feild" onChange={(e) => handle(e)}>
-              {Feild.map(f =>
-                <option key={f.toString()}>{f}</option>
-              )}
-            </Form.Select>
+    <div className="auth-wrapper">
+      <div className="auth-inner-ep">
+        <form onSubmit={(e) => { props.type === "Doctor" ? doctorsubmit(e) : patientsubmit(e) }}>
+        <div class="formhead bordersoft" >
+              <h3 class="fw-light">Edit Profile</h3>
           </div>
-          <div className="col">
-            <label>Qualification</label>
-            <Form.Select value={data.qualification} id="qualification" onChange={(e) => handle(e)}>
-              {Qualification.map(q =>
-                <option key={q.toString()}>{q}</option>
-              )}
-            </Form.Select>
+          <div className="mb-3 row">
+            <div className="col">
+              <label>First name</label>
+              <input onChange={(e) => handle(e)}
+                id="firstname"
+                value={data.firstname}
+                type="text" className="form-control" />
+            </div>
+            <div className="col">
+              <label>Last name</label>
+              <input onChange={(e) => handle(e)}
+                id="lastname"
+                value={data.lastname}
+                type="text" className="form-control" />
+            </div>
           </div>
-        </div> :
 
-        <div className="mb-3 row">
-          <div className="col">
-            <label>Age</label>
-            <input onChange={(e) => handle(e)}
-              id="age"
-              value={data.age}
+          {props.type === "Doctor" ?
+            <div className="mb-3 row">
+              <div className="col">
+                <label>Feild</label>
+                <Form.Select value={data.feild} id="feild" onChange={(e) => handle(e)}>
+                  {Feild.map(f =>
+                    <option key={f.toString()}>{f}</option>
+                  )}
+                </Form.Select>
+              </div>
+              <div className="col">
+                <label>Qualification</label>
+                <Form.Select value={data.qualification} id="qualification" onChange={(e) => handle(e)}>
+                  {Qualification.map(q =>
+                    <option key={q.toString()}>{q}</option>
+                  )}
+                </Form.Select>
+              </div>
+            </div> :
+
+            <div className="mb-3 row">
+              <div className="col">
+                <label>Age</label>
+                <input onChange={(e) => handle(e)}
+                  id="age"
+                  value={data.age}
+                  type="text" className="form-control" />
+              </div>
+              <div className="col">
+                <label>Gender</label>
+                <Form.Select value={data.gender} id="gender" onChange={(e) => handle(e)}>
+                  <option ></option>
+                  <option key={"Male"}>Male</option>
+                  <option key={"Female"}>Female</option>
+                </Form.Select>
+              </div>
+            </div>
+          }
+
+          <div className="mb-3">
+            <label>Phone</label>
+            <input
+              onChange={(e) => handle(e)}
+              id="phnnumber"
+              value={data.phnnumber}
               type="text" className="form-control" />
           </div>
-          <div className="col">
-            <label>Gender</label>
-            <Form.Select value={data.gender} id="gender" onChange={(e) => handle(e)}>
-              <option ></option>
-              <option key={"Male"}>Male</option>
-              <option key={"Female"}>Female</option>
-            </Form.Select>
+          <div className='btn-lg-sp'>
+            <button type="submit" className="btn btn-dark">
+              Update
+            </button>
           </div>
-        </div>
-      }
-
-      <div className="mb-3">
-        <label>Phone</label>
-        <input
-          onChange={(e) => handle(e)}
-          id="phnnumber"
-          value={data.phnnumber}
-          type="text" className="form-control" />
+          <br/>
+          <div className='btn-lg-sp'>
+            <button type="button" className="btn btn-dark" onClick={(e) => deleteacc(e)}>
+              Delete Account
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
-          Update
-        </button>
-        <br />
-        <button type="button" className="btn btn-primary" onClick={(e) => deleteacc(e)}>
-          Delete Account
-        </button>
-
-      </div>
-    </form>
+    </div>
   )
 }
 

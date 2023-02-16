@@ -1,18 +1,18 @@
 // eslint-disable-next-line 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { Button } from "react-bootstrap"
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import { NavDropdown } from 'react-bootstrap';
 
 export default function Logoutnav() {
     let text = window.localStorage.getItem("name")
     const name = text.split("@")[0]
-    function doctorprofile(e){
+    function doctorprofile(e) {
         e.preventDefault()
         window.location.href = "/doctorprofile"
     }
-    function patientprofile(e){
+    function patientprofile(e) {
         e.preventDefault()
         window.location.href = "/patientprofile"
     }
@@ -25,7 +25,45 @@ export default function Logoutnav() {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand><Link className="navbar-brand" to={'/'}>Hi, {name.toUpperCase()}</Link></Navbar.Brand>
+                    <Nav className="me-auto">
+                        {window.localStorage.type === "Doctor" ?
+                            <Nav.Link onClick={(e) => { doctorprofile(e) }}>Profile</Nav.Link>
+                            :
+                            <Nav.Link onClick={(e) => { patientprofile(e) }}>Profile</Nav.Link>
+                        }
+                        {window.localStorage.type === "Doctor" ?
+                            <NavDropdown title="Appointments">
+                                <NavDropdown.Item>
+                                    <Link style={{ textDecoration: 'none', color: 'black' }} to="/viewappointments">My Appointments</Link>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <Link style={{ textDecoration: 'none', color: 'black' }} to="/myschedule">My Schedule</Link>
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            :
+                            <NavDropdown title="Booking">
+                                <NavDropdown.Item>
+                                    <Link style={{ textDecoration: 'none', color: 'black' }} to="/mybookings">
+                                        My Appointments
+                                    </Link>
+                                </NavDropdown.Item>
+                                <NavDropdown.Item>
+                                    <Link style={{ textDecoration: 'none', color: 'black' }} to="/bookappointment1">
+                                        Book Appointmnet
+                                    </Link>
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        }
+                        <Nav.Link onClick={(e) => logout(e)}>Logout</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
+
+
+            {/* <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
                 <div className="container">
                     <Link className="navbar-brand" to={'/'}>
                         Hi, {name}
@@ -43,31 +81,31 @@ export default function Logoutnav() {
                             </li>
                             <li className="navbar-brand">
                                 {window.localStorage.type === "Doctor" ?
-                                    <DropdownButton id="dropdown-basic-button" title="Appointments">
-                                        <Dropdown.Item>
-                                            <Link className="nav-link" to="/viewappointments">
+                                    <NavDropdown title="Appointments">
+                                        <NavDropdown.Item>
+                                            <Link to="/viewappointments">
                                                 My Appointments
                                             </Link>
-                                        </Dropdown.Item>
-                                        <Dropdown.Item>
-                                            <Link className="nav-link" to="/myschedule">
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>
+                                            <Link to="/myschedule">
                                                 My Schedule
                                             </Link>
-                                        </Dropdown.Item>
-                                    </DropdownButton>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                     :
-                                    <DropdownButton id="dropdown-basic-button" title="Booking">
-                                        <Dropdown.Item>
-                                            <Link className="nav-link" to="/mybookings">
+                                    <NavDropdown title="Booking">
+                                        <NavDropdown.Item>
+                                            <Link to="/mybookings">
                                                 My Appointments
                                             </Link>
-                                        </Dropdown.Item>
-                                        <Dropdown.Item>
-                                            <Link className="nav-link" to="/bookappointment1">
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>
+                                            <Link to="/bookappointment1">
                                                 Book Appointmnet
                                             </Link>
-                                        </Dropdown.Item>
-                                    </DropdownButton>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                 }
                             </li>
                             <li className="navbar-brand">
@@ -76,7 +114,7 @@ export default function Logoutnav() {
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </nav> */}
         </div>
 
     )

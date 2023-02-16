@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { doctorsignupurl, Feild, Qualification, patientsignupurl } from '../../utils/constants';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
+import bg from '../../assets/Stethoscope.png'
 
 export default function SignUp(props) {
   const [data, setData] = useState({
@@ -24,7 +25,7 @@ export default function SignUp(props) {
       data.phnnumber !== "") {
       if ((props.type === "Doctor" && data.qualification !== "" && data.feild !== "")) {
         return true
-      } else if((data.age !== "" && data.gender !== "")) {
+      } else if ((data.age !== "" && data.gender !== "")) {
         return true
       } else {
         return false
@@ -49,20 +50,20 @@ export default function SignUp(props) {
       phnnumber: data.phnnumber
     },)
       .then(res => {
-        
+
         console.log(res)
         if (res.status === 201) {
           alert("Signup Success")
-          window.location.href="/doctorlogin"
-        } else{
+          window.location.href = "/doctorlogin"
+        } else {
           alert("Already Registered")
-        } 
+        }
       })
   }
 
   function patientsubmit(e) {
     e.preventDefault();
-    if(!validatedetails()){
+    if (!validatedetails()) {
       alert("Enter Valid details")
       return
     }
@@ -80,8 +81,8 @@ export default function SignUp(props) {
         console.log("hello")
         if (res.status === 201) {
           alert("Signup Success")
-          window.location.href="/patientlogin"
-        } else{
+          window.location.href = "/patientlogin"
+        } else {
           alert("Already Registered")
         }
       })
@@ -95,99 +96,110 @@ export default function SignUp(props) {
   }
 
   return (
-    <form onSubmit={(e) => { props.type === "Doctor" ? doctorsubmit(e) : patientsubmit(e) }}>
-      <h3>{props.type} Sign Up</h3>
-      <div className="mb-3 row">
-        <div className="col">
-          <label>First name</label>
-          <input onChange={(e) => handle(e)}
-            id="firstname"
-            value={data.firstname}
-            type="text" className="form-control" placeholder="First name" />
-        </div>
-        <div className="col">
-          <label>Last name</label>
-          <input onChange={(e) => handle(e)}
-            id="lastname"
-            value={data.lastname}
-            type="text" className="form-control" placeholder="Last name" />
-        </div>
-      </div>
-
-      {props.type === "Doctor" ?
-        <div className="mb-3 row">
-          <div className="col">
-            <label>Feild</label>
-            <Form.Select value={data.feild} id="feild" onChange={(e) => handle(e)}>
-              <option placeholder='Select Feild'></option>
-              {Feild.map(f =>
-                <option key={f.toString()}>{f}</option>
-              )}
-            </Form.Select>
-          </div>
-          <div className="col">
-            <label>Qualification</label>
-            <Form.Select value={data.qualification} id="qualification" onChange={(e) => handle(e)}>
-              <option placeholder='Select qualification' ></option>
-              {Qualification.map(q =>
-                <option key={q.toString()}>{q}</option>
-              )}
-            </Form.Select>
-          </div>
-        </div> :
-
-        <div className="mb-3 row">
-          <div className="col">
-            <label>Age</label>
-            <input onChange={(e) => handle(e)}
-              id="age"
-              value={data.age}
-              type="text" className="form-control" placeholder="age" />
-          </div>
-          <div className="col">
-            <label>Gender</label>
-            <Form.Select value={data.gender} id="gender" onChange={(e) => handle(e)}>
-              <option ></option>
-              <option key={"Male"}>Male</option>
-              <option key={"Female"}>Female</option>
-            </Form.Select>
-          </div>
-        </div>
-      }
-
-      <div className="mb-3">
-        <label>Phone</label>
-        <input
-          onChange={(e) => handle(e)}
-          id="phnnumber"
-          value={data.phnnumber}
-          type="text" className="form-control" placeholder="Enter Phn-number" />
-      </div>
-
-      <div className="mb-3 row">
+    <div className="auth-wrapper">
+      <div className='row'>
         <div className='col'>
-          <label>Email address</label>
-          <input
-            onChange={(e) => handle(e)}
-            id="email"
-            value={data.email}
-            type="email" className="form-control" placeholder="Enter email" />
+          <img className='img-sp' src={bg} alt="" />
         </div>
         <div className='col'>
-          <label>Password</label>
-          <input
-            onChange={(e) => handle(e)}
-            id="password"
-            value={data.password}
-            type="password" className="form-control" placeholder="Enter password" />
+          <div className="auth-inner-sp">
+            <form onSubmit={(e) => { props.type === "Doctor" ? doctorsubmit(e) : patientsubmit(e) }}>
+              <h3>{props.type} Sign Up</h3>
+              <div className="mb-3 row">
+                <div className="col">
+                  <label>First name</label>
+                  <input onChange={(e) => handle(e)}
+                    id="firstname"
+                    value={data.firstname}
+                    type="text" className="form-control" placeholder="First name" />
+                </div>
+                <div className="col">
+                  <label>Last name</label>
+                  <input onChange={(e) => handle(e)}
+                    id="lastname"
+                    value={data.lastname}
+                    type="text" className="form-control" placeholder="Last name" />
+                </div>
+              </div>
+
+              {props.type === "Doctor" ?
+                <div className="mb-3 row">
+                  <div className="col">
+                    <label>Feild</label>
+                    <Form.Select value={data.feild} id="feild" onChange={(e) => handle(e)}>
+                      <option placeholder='Select Feild'></option>
+                      {Feild.map(f =>
+                        <option key={f.toString()}>{f}</option>
+                      )}
+                    </Form.Select>
+                  </div>
+                  <div className="col">
+                    <label>Qualification</label>
+                    <Form.Select value={data.qualification} id="qualification" onChange={(e) => handle(e)}>
+                      <option placeholder='Select qualification' ></option>
+                      {Qualification.map(q =>
+                        <option key={q.toString()}>{q}</option>
+                      )}
+                    </Form.Select>
+                  </div>
+                </div> :
+
+                <div className="mb-3 row">
+                  <div className="col">
+                    <label>Age</label>
+                    <input onChange={(e) => handle(e)}
+                      id="age"
+                      value={data.age}
+                      type="text" className="form-control" placeholder="age" />
+                  </div>
+                  <div className="col">
+                    <label>Gender</label>
+                    <Form.Select value={data.gender} id="gender" onChange={(e) => handle(e)}>
+                      <option ></option>
+                      <option key={"Male"}>Male</option>
+                      <option key={"Female"}>Female</option>
+                    </Form.Select>
+                  </div>
+                </div>
+              }
+
+              <div className="mb-3">
+                <label>Phone</label>
+                <input
+                  onChange={(e) => handle(e)}
+                  id="phnnumber"
+                  value={data.phnnumber}
+                  type="text" className="form-control" placeholder="Enter Phn-number" minLength={10} maxLength={10} />
+              </div>
+
+              <div className="mb-3 row">
+                <div className='col'>
+                  <label>Email address</label>
+                  <input
+                    onChange={(e) => handle(e)}
+                    id="email"
+                    value={data.email}
+                    type="email" className="form-control" placeholder="Enter email" />
+                </div>
+                <div className='col'>
+                  <label>Password</label>
+                  <input
+                    onChange={(e) => handle(e)}
+                    id="password"
+                    value={data.password}
+                    type="password" className="form-control" placeholder="Enter password" minLength={6} />
+                </div>
+              </div>
+              <div className="btn-lg-sp">
+                <button type="submit" className="btn btn-dark">
+                  Sign Up
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
-          Sign Up
-        </button>
-      </div>
-    </form>
+    </div>
   )
 }
 

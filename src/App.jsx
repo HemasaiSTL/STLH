@@ -23,37 +23,33 @@ function App() {
         {window.localStorage.getItem("jwt") ? <Logoutnav></Logoutnav> :
           <Loginnav></Loginnav>
         }
-        <div className="auth-wrapper">
-          <div className="auth-inner">
-            {window.localStorage.getItem("jwt") ?
-              (window.localStorage.getItem("type") === "Doctor" ?
-                <Routes>
-                  <Route path='/' element={<Viewappointments />}></Route>
-                  <Route path='/doctorprofile' element={<Profile type="Doctor"></Profile>}></Route>
-                  <Route path='/myschedule' element={<ScheduleManagement />}></Route>
-                  <Route path='/viewappointments' element={<Viewappointments />}></Route>
-                </Routes>
-                :
-                <Routes>
-                  <Route exact path="/" element={<Viewdoctors />} />
-                  <Route exact path="/mybookings" element={<Mybookings />} />
-                  <Route path='/patientprofile' element={<Profile type="Patient"></Profile>}></Route>
-                  <Route path="/bookappointment1" element={<Viewdoctors />} />
-                  <Route path="/bookappointment2" element={<PatientsBooking />} />
-                  
-                </Routes>
-              )
-              :
-              <Routes>
-                <Route exact path="/" element={<Home></Home>} />
-                <Route path="/doctorlogin" element={<Login type="Doctor" url={doctorloginurl} />} />
-                <Route path="/patientlogin" element={<Login type="Patient" url={patientloginurl} />} />
-                <Route path="/sdoctor" element={<SignUp type="Doctor" />} />
-                <Route path="/spatient" element={<SignUp type="Patient" />} />
-              </Routes>
-            }
-          </div>
-        </div>
+        {window.localStorage.getItem("jwt") ?
+          (window.localStorage.getItem("type") === "Doctor" ?
+            <Routes>
+              <Route path='/' element={<Viewappointments />}></Route>
+              <Route path='/doctorprofile' element={<Profile type="Doctor"></Profile>}></Route>
+              <Route path='/myschedule' element={<ScheduleManagement />}></Route>
+              <Route path='/viewappointments' element={<Viewappointments />}></Route>
+            </Routes>
+            :
+            <Routes>
+              <Route exact path="/" element={<Viewdoctors />} />
+              <Route exact path="/mybookings" element={<Mybookings />} />
+              <Route path='/patientprofile' element={<Profile type="Patient"></Profile>}></Route>
+              <Route path="/bookappointment1" element={<Viewdoctors />} />
+              <Route path="/bookappointment2" element={<PatientsBooking />} />
+
+            </Routes>
+          )
+          :
+          <Routes>
+            <Route exact path="/" element={<Home></Home>} />
+            <Route path="/doctorlogin" element={<Login type="Doctor" url={doctorloginurl} />} />
+            <Route path="/patientlogin" element={<Login type="Patient" url={patientloginurl} />} />
+            <Route path="/sdoctor" element={<SignUp type="Doctor" />} />
+            <Route path="/spatient" element={<SignUp type="Patient" />} />
+          </Routes>
+        }
       </div>
     </Router>
   );

@@ -18,7 +18,7 @@ export default function PaymentModal(props) {
         <h4>250</h4>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Pay</Button>
+        <Button variant="dark" onClick={props.onHide}>Pay</Button>
       </Modal.Footer>
     </Modal>
   );

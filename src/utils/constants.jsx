@@ -1,6 +1,7 @@
 export const Feild = ["Orthopedic","Gynocology","Dermatology","Cardiology","Dentist","Veternary","Ayurvedic"]
 export const Qualification = ["MBBS","PHD","BDS","BUMS","BHMS","MD"];
-export var Alldays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+export var Alldays=["10:00am-10:30am","10:30am-11:00am","11:00am-11:30am","11:30am-12:00pm","12:00pm-12:30pm","01:30pm-02:00pm","02:00pm-02:30pm","02:30pm-03:00pm","03:00pm-03:30pm","03:30pm-04:00pm","04:00pm-04:30pm"]
+export var AllSlots=["10:00am-10:30am","10:30am-11:00am","11:00am-11:30am","11:30am-12:00pm","12:00pm-12:30pm","01:30pm-02:00pm","02:00pm-02:30pm","02:30pm-03:00pm","03:00pm-03:30pm","03:30pm-04:00pm","04:00pm-04:30pm"]
 export const doctorsignupurl= "http://localhost:5051/api/doctors/add"
 export const doctorloginurl="http://localhost:5051/api/doctors/authenticate"
 export const patientloginurl="http://localhost:5052/api/patients/authenticate"
@@ -20,4 +21,6 @@ export const docdelurl="http://localhost:5051/api/doctors/delete/"
 export const paidelurl="http://localhost:5052/api/patients/delete/"
 export const docpaisloturl="http://localhost:5053/api/AppointmentBooking/getpdappointments/"
 export const getappointmentbyID="http://localhost:5053/api/AppointmentBooking/getAppointments/"
-export const checksloturl="http://localhost:5053/api/AppointmentBooking/slotexit/"
+export const checksloturl="http://localhost:5053/api/AppointmentBooking/checkslotinap/"
+export const getslotsbydateurl="http://localhost:5053/api/AppointmentBooking/slotbydate/"
+export const checkslotinslots="http://localhost:5053/api/AppointmentBooking/slotexit/"
